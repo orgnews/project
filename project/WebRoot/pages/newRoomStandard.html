@@ -222,35 +222,35 @@
             </div>
             <!-- /.box-header -->
             <!-- form start -->
-            <form role="form">
+            <form role="form" action="" id="addRoomId">
               <div class="box-body">
                 <div class="form-group">
                   <label for="exampleInputEmail1">楼层</label>
-                  <input type="email" class="form-control" id="floor" placeholder="楼层">
+                  <input type="text" name="floor" class="form-control" id="floor" placeholder="楼层">
                 </div>
                 <div class="form-group">
                   <label for="exampleInputPassword1">房间号</label>
-                  <input type="password" class="form-control" id="room_number" placeholder="房间号">
+                  <input type="text" name="room_number" class="form-control" id="room_number" placeholder="房间号">
                 </div>
                 <div class="form-group">
                   <label for="exampleInputPassword1">居室</label>
-                  <input type="password" class="form-control" id="bed_room" placeholder="居室">
+                  <input type="text" name="bed_room" class="form-control" id="bed_room" placeholder="居室">
                 </div>
                 <div class="form-group">
                   <label for="exampleInputPassword1">朝向</label>
-                  <input type="password" class="form-control" id="orientation" placeholder="朝向">
+                  <input type="text" name="orientation" class="form-control" id="orientation" placeholder="朝向">
                 </div>
                 <div class="form-group">
                   <label for="exampleInputPassword1">房间价钱</label>
-                  <input type="password" class="form-control" id="room_money" placeholder="房间价钱">
+                  <input type="text" name="room_money" class="form-control" id="room_money" placeholder="房间价钱">
                 </div>
               </div>
               <!-- /.box-body -->
 
-              <div class="box-footer">
-                <button type="submit" class="btn btn-primary">保存信息</button>
-              </div>
             </form>
+              <div class="box-footer">
+                <button type="submit" class="btn btn-primary" id="saveRoomStandrd">保存信息</button>
+              </div>
           </div>
       </div>
 <!-- ./wrapper -->
@@ -260,9 +260,6 @@
 <!-- jQuery UI 1.11.4 -->
 <script src="../bower_components/jquery-ui/jquery-ui.min.js"></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-<script>
-  $.widget.bridge('uibutton', $.ui.button);
-</script>
 <!-- Bootstrap 3.3.7 -->
 <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <!-- Morris.js charts -->
@@ -292,6 +289,23 @@
 <script src="../dist/js/pages/dashboard.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="../dist/js/demo.js"></script>
+<script type="text/javascript">
+	$(function(){
+		$("#saveRoomStandrd").click(function(){
+		
+			$.ajax({
+				url:"../roomStandard",
+				data:$("#addRoomId").serialize(),
+				type:"POST",
+				dataType:"json",
+				success:function(data){
+					
+				}
+	});  
+		});
+	});
+</script>
+
 </body>
 </html>
 

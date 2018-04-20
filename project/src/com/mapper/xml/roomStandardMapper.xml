@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.RoomStandardMapper">
+	<insert id="addRoomStandard" parameterType="com.pojo.RoomStandard">
+		insert into room_standard (id,floor,room_number,bed_room,orientation,room_money,establish_date)
+		 values (#{id},#{floor},#{room_number},#{bed_room},#{orientation},#{room_money},#{establish_date})
+	</insert>
+</mapper>
