@@ -294,21 +294,15 @@ var url='';
 	$(function(){
 		url=window.location .href;
 		  var standardId=url.indexOf('=');
-
 		if (standardId == -1){
-		  return "";
-		}else{
-		  url=url.substring(standardId+1);
-		  $("#room_standard_id").val(url);
-		}
-		console.log(url);
-		if($("#room_standard_id").val()==''||$("#room_standard_id").val()==null){
 			$("#room_standard").text("新建客房标准");
 			$("#saveRoomStandrd").click(function(){
 				addRoomStandard();
 			});
 		}else{
-			$("#room_standard").text("修改客房标准");
+		  url=url.substring(standardId+1);
+		  $("#room_standard_id").val(url);
+		  $("#room_standard").text("修改客房标准");
 			queryRoomStandardById();
 			$("#saveRoomStandrd").click(function(){
 				updateRoomStandard();
@@ -338,7 +332,12 @@ var url='';
 				type:"POST",
 				dataType:"json",
 				success:function(data){
-					
+					if(data.status="200"){
+						alert(data.message);
+						location.href="queryRoomStandard.html";
+					}else{
+						alert(data.message);
+					}
 				}
 	});  
 	}

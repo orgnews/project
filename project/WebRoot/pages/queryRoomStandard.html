@@ -224,7 +224,14 @@
               <div class="col-sm-6"></div>
               <div class="col-sm-6">
               <div id="example1_filter" class="dataTables_filter">
-              查询条件写这里
+              <table>
+              <tbody>
+              <tr>
+                  <td><input type="text" class="form-control" placeholder="房间号" id="roomNumber"></td>
+                <td><button type="button" class="btn btn-block btn-primary btn-flat" onclick="queryRoomStandard(1,10);">查询</button></td>
+                </tr>
+                </tbody>
+              </table>
               </div>
               </div>
               </div>
@@ -252,7 +259,7 @@
             </div>
             <!-- /.box-body -->
           </div>
-        
+        </div>
       </div>
 <!-- ./wrapper -->
 
@@ -303,7 +310,7 @@ var pageNum=1;
 	function queryRoomStandard(pageNum,pageCount){
 		$.ajax({
 			url:"../roomStandard",
-			data:{"pageNum":pageNum,"pageCount":pageCount},
+			data:{"pageNum":pageNum,"pageCount":pageCount,"findCondition":$("#roomNumber").val()},
 			type:"GET",
 			dataType:"json",
 			success:function(data){
@@ -319,7 +326,7 @@ var pageNum=1;
 		                  '<td>'+info.room_money+'</td>'+
 		                  '<td>'+info.establish_date+'</td>'+
 		                  '<td><div class="btn-group">'+
-		                  '<button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i></button>'+
+		                  '<button type="button" class="btn btn-default btn-sm" onclick="delRoomStandardById('+info.id+');"><i class="fa fa-trash-o"></i></button>'+
 		                 ' <button type="button" class="btn btn-default btn-sm" onclick="queryRoomStandardById('+info.id+');"><i class="fa fa-edit"></i></button>'+
 		                '</div></td>'+
 		                '</tr>';
@@ -380,6 +387,24 @@ var pageNum=1;
 	}
 	function queryRoomStandardById(roomStandardId){
 		location.href="newRoomStandard.html?id="+roomStandardId;
+	}
+	
+	function delRoomStandardById(delId) {
+		$.ajax({
+			url:"../delRoomStandard",
+			data:{"delId":delId},
+			type:"GET",
+			dataType:"json",
+			success:function(data){
+				if(data.status==200){
+					alert(data.message);
+					location.reload();
+				}else{
+					alert(data.message);
+				}
+				
+	} 
+		});
 	}
 </script>
 </body>

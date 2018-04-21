@@ -35,9 +35,10 @@ public class RoomStandardController {
 	 */
 	@RequestMapping(value="/roomStandard",method=RequestMethod.GET)
 	@ResponseBody
-	public Map<String,Object> queryRoomStandard(int pageNum,int pageCount){
+	public Map<String,Object> queryRoomStandard(int pageNum,int pageCount, String findCondition){
+		
 		Map<String,Object> map = new HashMap<String,Object>();
-		map = roomStandardService.queryRoomStandard(pageNum, pageCount);
+		map = roomStandardService.queryRoomStandard(pageNum, pageCount,findCondition);
 		return map;
 	}
 	
@@ -57,5 +58,13 @@ public class RoomStandardController {
 		map = roomStandardService.updateRoomStandard(roomStandard);
 		return map;
 	}
+	@RequestMapping(value="/delRoomStandard",method=RequestMethod.GET)
+	@ResponseBody
+	public Map<String,Object> delRoomStandard(String delId){
+		Map<String,Object> map = new HashMap<String,Object>();
+		map = roomStandardService.delRoomStandard(delId);
+		return map;
+	}
+	
 	
 }

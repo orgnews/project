@@ -6,11 +6,22 @@
 		 values (#{id},#{floor},#{room_number},#{bed_room},#{orientation},#{room_money},#{establish_date})
 	</insert>
 	<select id="queryRoomStandardCount" resultType="int">
-		select count(1) from room_standard
+		select count(1) from room_standard  where 1=1
+		<if test="findCondition !=null and findCondition!='' and findCondition!='null'">
+   		<![CDATA[
+			 and room_number like CONCAT('%',#{findCondition},'%' )
+		]]>
+		</if>
 	</select>
 	
 	<select id="queryRoomStandard" resultType="java.util.Map">
-		select * from room_standard limit #{startPage},#{number}
+	select * from room_standard  where 1=1
+	<if test="findCondition !=null and findCondition!='' and findCondition!='null'">
+   		<![CDATA[
+			 and room_number like CONCAT('%',#{findCondition},'%' )
+		]]>
+		</if>
+		limit #{startPage},#{number}
 	</select>
 	
 	<select id="queryRoomStandardById" parameterType="String" resultType="com.pojo.RoomStandard">
@@ -22,4 +33,9 @@
    		room_number=#{room_number},bed_room=#{bed_room},orientation=#{orientation}
    		,room_money=#{room_money},establish_date=#{establish_date} where id=#{id}
 	</update>
+	
+	<delete id="delRoomStandard" parameterType="String" >
+		delete from room_standard where id=#{delId}
+	</delete>
+	
 </mapper>

@@ -36,12 +36,12 @@ public class RoomStandardServiceImpl implements RoomStandardService{
 		return map;
 	}
 	@Override
-	public Map<String, Object> queryRoomStandard(int pageNum, int pageCount) {
+	public Map<String, Object> queryRoomStandard(int pageNum, int pageCount,String findCondition) {
 		Map<String,Object> map = new HashMap<String,Object>();
 		try {
-			int count = roomStandardMapper.queryRoomStandardCount();
+			int count = roomStandardMapper.queryRoomStandardCount(findCondition);
 			Paging page = Util.paging(count, pageNum, pageCount);
-			List<Object> objList = roomStandardMapper.queryRoomStandard(page.getStartCount(), pageCount);
+			List<Object> objList = roomStandardMapper.queryRoomStandard(page.getStartCount(), pageCount,findCondition);
 			map.put("page", page);
 			map.put("list", objList);
 			map.put("status", "200");
@@ -80,6 +80,22 @@ public class RoomStandardServiceImpl implements RoomStandardService{
 			map.put("message", "修改客房信息失败");
 			e.printStackTrace();
 		}
+		return map;
+	}
+	@Override
+	public Map<String, Object> delRoomStandard(String delId) {
+		Map<String,Object> map = new HashMap<String,Object>();
+
+		try {
+			roomStandardMapper.delRoomStandard(delId);
+			map.put("status", "200");
+			map.put("message", "删除客房信息成功");
+		} catch (Exception e) {
+			map.put("status", "500");
+			map.put("message", "删除客房信息失败");
+			e.printStackTrace();
+		}
+		
 		return map;
 	}
 

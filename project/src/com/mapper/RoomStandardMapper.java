@@ -10,9 +10,11 @@ public interface RoomStandardMapper {
 
 	public void addRoomStandard(RoomStandard roomStandard);
 	
-	public List<Object> queryRoomStandard(@Param("startPage")int startPage,@Param("number")int number);
-	public int queryRoomStandardCount();
+	public List<Object> queryRoomStandard(@Param("startPage")int startPage,@Param("number")int number,@Param("findCondition")String findCondition);
+	public int queryRoomStandardCount(@Param("findCondition")String findCondition);
 	
 	public RoomStandard queryRoomStandardById(String id);
 	public void updateRoomStandard(RoomStandard roomStandard);
+
+	public void delRoomStandard(String delId);
 }
