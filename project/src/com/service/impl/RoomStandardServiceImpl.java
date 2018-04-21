@@ -51,13 +51,35 @@ public class RoomStandardServiceImpl implements RoomStandardService{
 			map.put("message", "查询失败！");
 			e.printStackTrace();
 		}
-		/*int count = englishWordMapper.countEnglish(startTime,endTime,englishWord);
-		Paging page = Util.paging(count, pageNum, pageCount);
-		List<Object> objList = englishWordMapper.queryAllEnglishWord(page.getStartCount(), pageCount,startTime,endTime,englishWord);
-		map.put("page", page);
-		map.put("list", objList);
-		map.put("status", "200");
-		map.put("message", "查询英语成功！");*/
+		return map;
+	}
+	@Override
+	public Map<String, Object> queryRoomStandardById(String id) {
+		Map<String,Object> map = new HashMap<String,Object>();
+		try {
+			RoomStandard roomStandard = roomStandardMapper.queryRoomStandardById(id);
+			map.put("roomStandard", roomStandard);
+			map.put("status", "200");
+			map.put("message", "查询客房信息成功");
+		}catch(Exception e) {
+			map.put("status", "500");
+			map.put("message", "查询客房信息失败");
+			e.printStackTrace();
+		}
+		return map;
+	}
+	@Override
+	public Map<String, Object> updateRoomStandard(RoomStandard roomStandard) {
+		Map<String,Object> map = new HashMap<String,Object>();
+		try {
+			roomStandardMapper.updateRoomStandard(roomStandard);
+			map.put("status", "200");
+			map.put("message", "修改客房信息成功");
+		}catch(Exception e) {
+			map.put("status", "500");
+			map.put("message", "修改客房信息失败");
+			e.printStackTrace();
+		}
 		return map;
 	}
 

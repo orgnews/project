@@ -218,11 +218,12 @@
   <div class="content-wrapper">
 <div class="box box-primary">
             <div class="box-header with-border">
-              <h3 class="box-title">新建客房标准</h3>
+              <h3 class="box-title" id="room_standard"></h3>
             </div>
             <!-- /.box-header -->
             <!-- form start -->
             <form role="form" action="" id="addRoomId">
+            <input type="hidden" id="room_standard_id" name="id"/>
               <div class="box-body">
                 <div class="form-group">
                   <label for="exampleInputEmail1">楼层</label>
@@ -246,7 +247,7 @@
                 </div>
               </div>
               <!-- /.box-body -->
-
+			<input type="hidden" name="establish_date" id="establish_date"/>
             </form>
               <div class="box-footer">
                 <button type="submit" class="btn btn-primary" id="saveRoomStandrd">保存信息</button>
@@ -254,7 +255,6 @@
           </div>
       </div>
 <!-- ./wrapper -->
-
 <!-- jQuery 3 -->
 <script src="../bower_components/jquery/dist/jquery.min.js"></script>
 <!-- jQuery UI 1.11.4 -->
@@ -290,8 +290,33 @@
 <!-- AdminLTE for demo purposes -->
 <script src="../dist/js/demo.js"></script>
 <script type="text/javascript">
+var url='';
 	$(function(){
-		$("#saveRoomStandrd").click(function(){
+		url=window.location .href;
+		  var standardId=url.indexOf('=');
+
+		if (standardId == -1){
+		  return "";
+		}else{
+		  url=url.substring(standardId+1);
+		  $("#room_standard_id").val(url);
+		}
+		console.log(url);
+		if($("#room_standard_id").val()==''||$("#room_standard_id").val()==null){
+			$("#room_standard").text("新建客房标准");
+			$("#saveRoomStandrd").click(function(){
+				addRoomStandard();
+			});
+		}else{
+			$("#room_standard").text("修改客房标准");
+			queryRoomStandardById();
+			$("#saveRoomStandrd").click(function(){
+				updateRoomStandard();
+			});
+		}
+	});
+	
+	function addRoomStandard(){
 			
 			var floor = $("#floor").val()
 			if(parseInt(floor)!=floor){//通过parseInt转换变量a的值，然后与a本身进行比较，如果是整数，则两者一致，如果不是整数，则两者不一致。
@@ -316,8 +341,53 @@
 					
 				}
 	});  
-		});
+	}
+	
+	function updateRoomStandard(){
+					var floor = $("#floor").val()
+					if(parseInt(floor)!=floor){//通过parseInt转换变量a的值，然后与a本身进行比较，如果是整数，则两者一致，如果不是整数，则两者不一致。
+						   //是整数
+						   alert("楼层输入有误 ， 请输入数字");
+							return;
+						}
+					
+					var room_number = $("#room_number").val()
+					if(parseInt(room_number)!=room_number){//通过parseInt转换变量a的值，然后与a本身进行比较，如果是整数，则两者一致，如果不是整数，则两者不一致。
+						   //是整数
+						   alert("房间号输入有误 ， 请输入数字");
+							return;
+						}
+					
+					$.ajax({
+						url:"../updateRoomStandard",
+						data:$("#addRoomId").serialize(),
+						type:"POST",
+						dataType:"json",
+						success:function(data){
+							if(data.status==200){
+								alert(data.message);
+							}else{
+								alert(data.message);
+							}
+						}
+			});  
+			}
+	function queryRoomStandardById(){
+		$.ajax({
+			url:"../roomStandardById",
+			data:{"id":url},
+			type:"GET",
+			dataType:"json",
+			success:function(data){
+				$("#floor").val(data.roomStandard.floor);
+				$("#room_number").val(data.roomStandard.room_number);
+				$("#bed_room").val(data.roomStandard.bed_room);
+				$("#orientation").val(data.roomStandard.orientation);
+				$("#room_money").val(data.roomStandard.room_money);
+				$("#establish_date").val(data.roomStandard.establish_date);
+			}
 	});
+	}
 </script>
 
 </body>

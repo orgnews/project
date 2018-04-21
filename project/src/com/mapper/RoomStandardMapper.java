@@ -12,4 +12,7 @@ public interface RoomStandardMapper {
 	
 	public List<Object> queryRoomStandard(@Param("startPage")int startPage,@Param("number")int number);
 	public int queryRoomStandardCount();
+	
+	public RoomStandard queryRoomStandardById(String id);
+	public void updateRoomStandard(RoomStandard roomStandard);
 }

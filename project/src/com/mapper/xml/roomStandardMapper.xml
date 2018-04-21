@@ -12,4 +12,14 @@
 	<select id="queryRoomStandard" resultType="java.util.Map">
 		select * from room_standard limit #{startPage},#{number}
 	</select>
+	
+	<select id="queryRoomStandardById" parameterType="String" resultType="com.pojo.RoomStandard">
+		select * from room_standard where id=#{id}
+	</select>
+	
+	<update id="updateRoomStandard" parameterType="com.pojo.RoomStandard">
+		update room_standard set floor=#{floor},
+   		room_number=#{room_number},bed_room=#{bed_room},orientation=#{orientation}
+   		,room_money=#{room_money},establish_date=#{establish_date} where id=#{id}
+	</update>
 </mapper>

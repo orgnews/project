@@ -40,4 +40,22 @@ public class RoomStandardController {
 		map = roomStandardService.queryRoomStandard(pageNum, pageCount);
 		return map;
 	}
+	
+	@RequestMapping(value="/roomStandardById",method=RequestMethod.GET)
+	@ResponseBody
+	public Map<String,Object> queryRoomStandardById(String id){
+		Map<String,Object> map = new HashMap<String,Object>();
+		map = roomStandardService.queryRoomStandardById(id);
+		return map;
+	}
+	
+	
+	@RequestMapping(value="/updateRoomStandard",method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String,Object> updateRoomStandard(RoomStandard roomStandard){
+		Map<String,Object> map = new HashMap<String,Object>();
+		map = roomStandardService.updateRoomStandard(roomStandard);
+		return map;
+	}
+	
 }
