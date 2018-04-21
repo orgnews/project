@@ -292,7 +292,21 @@
 <script type="text/javascript">
 	$(function(){
 		$("#saveRoomStandrd").click(function(){
-		
+			
+			var floor = $("#floor").val()
+			if(parseInt(floor)!=floor){//通过parseInt转换变量a的值，然后与a本身进行比较，如果是整数，则两者一致，如果不是整数，则两者不一致。
+				   //是整数
+				   alert("楼层输入有误 ， 请输入数字");
+					return;
+				}
+			
+			var room_number = $("#room_number").val()
+			if(parseInt(room_number)!=room_number){//通过parseInt转换变量a的值，然后与a本身进行比较，如果是整数，则两者一致，如果不是整数，则两者不一致。
+				   //是整数
+				   alert("房间号输入有误 ， 请输入数字");
+					return;
+				}
+			
 			$.ajax({
 				url:"../roomStandard",
 				data:$("#addRoomId").serialize(),

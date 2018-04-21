@@ -5,4 +5,11 @@
 		insert into room_standard (id,floor,room_number,bed_room,orientation,room_money,establish_date)
 		 values (#{id},#{floor},#{room_number},#{bed_room},#{orientation},#{room_money},#{establish_date})
 	</insert>
+	<select id="queryRoomStandardCount" resultType="int">
+		select count(1) from room_standard
+	</select>
+	
+	<select id="queryRoomStandard" resultType="java.util.Map">
+		select * from room_standard limit #{startPage},#{number}
+	</select>
 </mapper>

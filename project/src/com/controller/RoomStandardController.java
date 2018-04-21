@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -22,17 +23,21 @@ public class RoomStandardController {
 	@ResponseBody
 	public Map<String,Object> addRoomStandard(RoomStandard roomStandard){
 		Map<String,Object> map = new HashMap<String,Object>();
-		roomStandardService.addRoomStandard(roomStandard);
-		map.put("success", "成功");
+		map = roomStandardService.addRoomStandard(roomStandard);
 		return map;
 	}
-	@RequestMapping(value="/room",method=RequestMethod.GET)
+	/**
+	 * 分页
+	 * @param count	总共条数
+	 * @param pageNum	第几页
+	 * @param pageCount	每页的条数
+	 * @return
+	 */
+	@RequestMapping(value="/roomStandard",method=RequestMethod.GET)
 	@ResponseBody
-	public Map<String,Object> test(){
+	public Map<String,Object> queryRoomStandard(int pageNum,int pageCount){
 		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("age", "22");
-		map.put("name", "祝明");
-		map.put("sex", "南");
+		map = roomStandardService.queryRoomStandard(pageNum, pageCount);
 		return map;
 	}
 }

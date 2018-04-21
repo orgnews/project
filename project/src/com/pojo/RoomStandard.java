@@ -15,7 +15,7 @@ public class RoomStandard {
 	 */
 	private String bed_room;
 	/**
-	 * orientation
+	 * 朝向
 	 */
 	private String orientation;
 	/**
