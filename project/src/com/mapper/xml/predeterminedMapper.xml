@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.PredeterminedMapper">
+	<insert id="addPredetermined" parameterType="com.pojo.Predetermined">
+		insert into predetermined (id,room_number,name,id_card,phone,money_status,order_time,check_in_time)
+		 values (#{id},#{room_number},#{name},#{id_card},#{phone},#{money_status},#{order_time},#{check_in_time})
+	</insert>
+	<delete id="deletePredetermined" parameterType="String">
+		delete from predetermined where id=#{id}
+	</delete>
+	<update id="updatePredetermined" parameterType="com.pojo.Predetermined">
+		update predetermined set room_number=#{room_number},name=#{name},id_card=#{id_card},phone=#{phone},
+		money_status=#{money_status},check_in_time=#{check_in_time} 
+		where id=#{id}
+	</update>
+	<select id="queryPredetermined" resultType="java.util.Map">
+		select * from predetermined
+		limit #{startPage},#{number}
+	</select>
+	<select id="queryPredeterminedCount" resultType="int">
+		select count(1) from predetermined
+	</select>
+	<select id="queryPredeterminedById" parameterType="String" resultType="com.pojo.Predetermined">
+		select * from predetermined where id=#{id}
+	</select>
+</mapper>
