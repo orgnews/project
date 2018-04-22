@@ -216,54 +216,44 @@
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
-<div class="box">
-            <!-- /.box-header -->
-            <div class="box-body">
-              <div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
-              <div class="row">
-              <div class="col-sm-6"></div>
-              <div class="col-sm-6">
-              <div id="example1_filter" class="dataTables_filter">
-              查询条件写这里
-              </div>
-              </div>
-              </div>
-              <div class="row"><div class="col-sm-12">
-              <table id="example1" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
-                <thead>
-                <tr role="row"><th class="sorting_asc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending" style="width: 297px;">Rendering engine</th><th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 361px;">Browser</th><th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" style="width: 322px;">Platform(s)</th><th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending" style="width: 257px;">Engine version</th><th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 190px;">CSS grade</th></tr>
-                </thead>
-                <tbody>
-               <tr role="row" class="even">
-                  <td class="sorting_1">Gecko</td>
-                  <td>Mozilla 1.0</td>
-                  <td>Win 95+ / OSX.1+</td>
-                  <td>1</td>
-                  <td>A</td>
-                </tr></tbody>
-                <tfoot>
-                <tr><th rowspan="1" colspan="1">Rendering engine</th><th rowspan="1" colspan="1">Browser</th><th rowspan="1" colspan="1">Platform(s)</th><th rowspan="1" colspan="1">Engine version</th><th rowspan="1" colspan="1">CSS grade</th></tr>
-                </tfoot>
-              </table></div></div><div class="row">
-              <div class="col-sm-5">
-              <div class="dataTables_info" id="example1_info" role="status" aria-live="polite">
-              Showing 1 to 10 of 57 entries</div>
-              </div>
-              <div class="col-sm-7">
-              <div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">
-              <ul class="pagination">
-              <li class="paginate_button previous disabled" id="example1_previous">
-              <a href="#" aria-controls="example1" data-dt-idx="0" tabindex="0">上一页</a>
-              </li>
-              <li class="paginate_button active">
-              <a href="#" aria-controls="example1" data-dt-idx="1" tabindex="0">1</a></li>
-              <li class="paginate_button "><a href="#" aria-controls="example1" data-dt-idx="6" tabindex="0">2</a></li>
-              <li class="paginate_button next" id="example1_next">
-              <a href="#" aria-controls="example1" data-dt-idx="7" tabindex="0">下一页</a>
-              </li>
-              </ul></div></div></div></div>
+<div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title" id="room_standard"></h3>
             </div>
-            <!-- /.box-body -->
+            <!-- /.box-header -->
+            <!-- form start -->
+            <form role="form" action="" id="reservationAddId">
+              <div class="box-body">
+                <div class="form-group">
+                  <label for="exampleInputPassword1">房间号</label>
+                  <input type="text" name="room_number" class="form-control" id="room_number" placeholder="房间号">
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputPassword1">订房人</label>
+                  <input type="text" name="name" class="form-control" id="name" placeholder="订房人">
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputPassword1">订房人身份证号</label>
+                  <input type="text" name="id_card" class="form-control" id="id_card" placeholder="订房人身份证号">
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputPassword1">订房人手机号</label>
+                  <input type="text" name="phone" class="form-control" id="phone" placeholder="订房人手机号">
+                </div>
+                 <div class="form-group">
+                  <label for="exampleInputPassword1">是否付款</label>
+                  <input type="text" name="money_status" class="form-control" id="money_status" placeholder="是否付款">
+                </div>
+                 <div class="form-group">
+                  <label for="exampleInputPassword1">入住时间</label>
+                  <input type="text" name="check_in_time" class="form-control" id="check_in_time" placeholder="入住时间">
+                </div>
+              </div>
+              <input type="hidden" id="reservationId" name="id"/>
+            </form>
+              <div class="box-footer">
+                <button type="submit" class="btn btn-primary" id="saveReservationAdd">保存信息</button>
+              </div>
           </div>
         
       </div>
@@ -306,6 +296,108 @@
 <script src="../dist/js/pages/dashboard.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="../dist/js/demo.js"></script>
+<script type="text/javascript">
+var url='';
+$(function(){
+	url=window.location .href;
+	  var standardId=url.indexOf('=');
+	if (standardId == -1){
+		$("#room_standard").text("新建客房信息");
+		$("#saveReservationAdd").click(function(){
+			addReservation();
+		});
+	}else{
+	  url=url.substring(standardId+1);
+	  $("#reservationId").val(url);
+	  $("#room_standard").text("修改客房信息");
+		queryReservationById();
+		$("#saveReservationAdd").click(function(){
+			updateReservation();
+		});
+	}
+});
+
+function addReservation(){
+	
+	var room_number = $("#room_number").val()
+	if(parseInt(room_number)!=room_number){//通过parseInt转换变量a的值，然后与a本身进行比较，如果是整数，则两者一致，如果不是整数，则两者不一致。
+		   //是整数
+		   alert("请输入正确的房间号");
+			return;
+		}
+	
+	var phone = $("#phone").val()
+	if(parseInt(phone)!=phone){//通过parseInt转换变量a的值，然后与a本身进行比较，如果是整数，则两者一致，如果不是整数，则两者不一致。
+		   //是整数
+		   alert("请输入正确的手机号");
+			return;
+		}
+	
+	$.ajax({
+		url:"../predetermined",
+		data:$("#reservationAddId").serialize(),
+		type:"POST",
+		dataType:"json",
+		success:function(data){
+			if(data.status="200"){
+				alert(data.message);
+				location.href="reservationInquiry.html";
+			}else{
+				alert(data.message);
+			}
+		}
+});  
+}
+
+function updateReservation(){
+	
+	var room_number = $("#room_number").val()
+	if(parseInt(room_number)!=room_number){//通过parseInt转换变量a的值，然后与a本身进行比较，如果是整数，则两者一致，如果不是整数，则两者不一致。
+		   //是整数
+		   alert("请输入正确的房间号");
+			return;
+		}
+	
+	var phone = $("#phone").val()
+	if(parseInt(phone)!=phone){//通过parseInt转换变量a的值，然后与a本身进行比较，如果是整数，则两者一致，如果不是整数，则两者不一致。
+		   //是整数
+		   alert("请输入正确的手机号");
+			return;
+		}
+	
+	$.ajax({
+		url:"../updatePredetermined",
+		data:$("#reservationAddId").serialize(),
+		type:"POST",
+		dataType:"json",
+		success:function(data){
+			if(data.status="200"){
+				alert(data.message);
+				location.href="reservationInquiry.html";
+			}else{
+				alert(data.message);
+			}
+		}
+});  
+}
+
+function queryReservationById(){
+	$.ajax({
+		url:"../predeterminedById",
+		data:{"id":$("#reservationId").val()},
+		type:"GET",
+		dataType:"json",
+		success:function(data){
+			$("#room_number").val(data.predetermined.room_number);
+			$("#name").val(data.predetermined.name);
+			$("#id_card").val(data.predetermined.id_card);
+			$("#phone").val(data.predetermined.phone);
+			$("#money_status").val(data.predetermined.money_status);
+			$("#check_in_time").val(data.predetermined.check_in_time);
+		}
+});
+}
+</script>
 </body>
 </html>
 
