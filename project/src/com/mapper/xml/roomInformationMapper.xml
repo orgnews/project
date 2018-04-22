@@ -15,4 +15,14 @@
 	<sql id="roomStatus">
 		room_status=#{room_status}
 	</sql>
+	<select id="findRoom_number" resultType="java.util.Map">
+		select room_number from room_standard where room_number not in(select room_standard.room_number  from room_information  left join room_standard ON room_standard.room_number = room_information.room_number)
+	</select>
+	
+	<insert id="addRoomInFormation" parameterType="com.pojo.RoomInFormation">
+		insert into room_information (id,room_number,room_name,room_area,air_conditioner,television,telephone,toilet,room_status,establish_date)
+		 values (#{id},#{room_number},#{room_name},#{room_area},#{air_conditioner},#{television},#{telephone},#{toilet},#{room_status},#{establish_date})
+	</insert>
+	
+	
 </mapper>
