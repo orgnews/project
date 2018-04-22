@@ -226,7 +226,10 @@
               <div class="box-body">
                 <div class="form-group">
                   <label for="exampleInputPassword1">房间号</label>
-                  <input type="text" name="room_number" class="form-control" id="room_number" placeholder="房间号">
+<!--                   <input type="text" name="room_number" class="form-control" id="room_number" placeholder="房间号"> -->
+							<select class="form-control" name="room_number" id="room_number">
+			                    
+			                  </select>
                 </div>
                 <div class="form-group">
                   <label for="exampleInputPassword1">订房人</label>
@@ -303,6 +306,7 @@ $(function(){
 	  var standardId=url.indexOf('=');
 	if (standardId == -1){
 		$("#room_standard").text("新建客房信息");
+		queryRoomStatus();
 		$("#saveReservationAdd").click(function(){
 			addReservation();
 		});
@@ -318,13 +322,6 @@ $(function(){
 });
 
 function addReservation(){
-	
-	var room_number = $("#room_number").val()
-	if(parseInt(room_number)!=room_number){//通过parseInt转换变量a的值，然后与a本身进行比较，如果是整数，则两者一致，如果不是整数，则两者不一致。
-		   //是整数
-		   alert("请输入正确的房间号");
-			return;
-		}
 	
 	var phone = $("#phone").val()
 	if(parseInt(phone)!=phone){//通过parseInt转换变量a的值，然后与a本身进行比较，如果是整数，则两者一致，如果不是整数，则两者不一致。
@@ -351,12 +348,6 @@ function addReservation(){
 
 function updateReservation(){
 	
-	var room_number = $("#room_number").val()
-	if(parseInt(room_number)!=room_number){//通过parseInt转换变量a的值，然后与a本身进行比较，如果是整数，则两者一致，如果不是整数，则两者不一致。
-		   //是整数
-		   alert("请输入正确的房间号");
-			return;
-		}
 	
 	var phone = $("#phone").val()
 	if(parseInt(phone)!=phone){//通过parseInt转换变量a的值，然后与a本身进行比较，如果是整数，则两者一致，如果不是整数，则两者不一致。
@@ -388,7 +379,7 @@ function queryReservationById(){
 		type:"GET",
 		dataType:"json",
 		success:function(data){
-			$("#room_number").val(data.predetermined.room_number);
+			$("#room_number").html('<option value=\''+data.predetermined.room_number+'\'>'+data.predetermined.room_number+'</option>');
 			$("#name").val(data.predetermined.name);
 			$("#id_card").val(data.predetermined.id_card);
 			$("#phone").val(data.predetermined.phone);
@@ -396,6 +387,22 @@ function queryReservationById(){
 			$("#check_in_time").val(data.predetermined.check_in_time);
 		}
 });
+}
+
+function queryRoomStatus(){
+	$.ajax({
+		url:"../status",
+		data:{"room_status":'0'},
+		type:"GET",
+		dataType:"json",
+		success:function(data){
+			var _html='';
+			$.each(data.list,function(e,info){
+				_html+='<option value=\''+info.room_number+'\'>'+info.room_number+'</option>';
+			});
+			$("#room_number").html(_html);
+		}
+	});
 }
 </script>
 </body>

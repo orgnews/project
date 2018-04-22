@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.RoomInformationMapper">
+	<select id="queryRoomInformationStatus" resultType="java.util.Map">
+		select * from room_information where 
+		<include refid="roomStatus"/>
+	</select>
+	
+	<update id="updateRoomInformationStatus">
+		update room_information  set
+		<include refid="roomStatus"/>
+		where room_number=#{room_number}
+	</update>
+	
+	<sql id="roomStatus">
+		room_status=#{room_status}
+	</sql>
+</mapper>

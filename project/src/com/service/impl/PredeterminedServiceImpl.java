@@ -9,6 +9,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.mapper.PredeterminedMapper;
+import com.mapper.RoomInformationMapper;
 import com.pojo.Paging;
 import com.pojo.Predetermined;
 import com.service.PredeterminedService;
@@ -20,12 +21,15 @@ public class PredeterminedServiceImpl implements PredeterminedService {
 
 	@Resource
 	private PredeterminedMapper predeterminedMapper;
+	@Resource
+	private RoomInformationMapper roomInformationMapper;
 
 	@Override
 	public Map<String, Object> addPredetermined(Predetermined predetermined) {
 		map.clear();
 		try {
 			predeterminedMapper.addPredetermined(predetermined);
+			roomInformationMapper.updateRoomInformationStatus("1", predetermined.getRoom_number());
 			map.put("status", "200");
 			map.put("message", "预订客房成功");
 		} catch (Exception e) {
@@ -41,6 +45,7 @@ public class PredeterminedServiceImpl implements PredeterminedService {
 		map.clear();
 		try {
 			predeterminedMapper.deletePredetermined(id);
+			
 			map.put("status", "200");
 			map.put("message", "删除客房成功");
 		} catch (Exception e) {
