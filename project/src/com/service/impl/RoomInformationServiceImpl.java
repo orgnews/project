@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.mapper.RoomInformationMapper;
 import com.pojo.Paging;
+import com.pojo.RoomInFormation;
 import com.service.RoomInformationService;
 import com.util.Util;
 
@@ -34,6 +35,36 @@ public class RoomInformationServiceImpl implements RoomInformationService {
 		}
 		return map;
 	}
+	
+	//查询所有房间号
+	@Override
+	public Map<String, Object> findRoom_number() {
+		map.clear();
+		List<String> list = roomInformationMapper.findRoom_number();
+		map.put("list", list);
+		return map;
+	}
+	//新增客房信息
+	@Override
+	public Map<String, Object> saveRoomInFormation(RoomInFormation roomInFormation) {
+		Map<String,Object> map = new HashMap<String,Object>();
+		try {
+			System.err.println(Util.date());
+		roomInFormation.setId(Util.uuid());
+		roomInFormation.setEstablish_date(Util.date());
+		roomInFormation.setRoom_status("0");
+		// TODO Auto-generated method stub
+		roomInformationMapper.addRoomInFormation(roomInFormation);
+		map.put("status", 200);
+		map.put("message", "新建客房信息成功");
+		}catch(Exception e){
+			map.put("status", 200);
+			map.put("message", "新建客房信息失败");
+			e.printStackTrace();
+		}
+		return map;
+	}
+	
 
 	@Override
 	public Map<String, Object> queryRoomInformationInStatus(int pageNum, int pageCount) {

@@ -226,31 +226,61 @@
             <input type="hidden" id="room_standard_id" name="id"/>
               <div class="box-body">
                 <div class="form-group">
-                  <label for="exampleInputEmail1">楼层</label>
-                  <input type="text" name="floor" class="form-control" id="floor" placeholder="楼层">
+                  <label for="exampleInputEmail1">客房标准名称</label>
+                  <input type="text" name="room_name" class="form-control" id="room_name" placeholder="客房标准名称">
                 </div>
                 <div class="form-group">
                   <label for="exampleInputPassword1">房间号</label>
-                  <input type="text" name="room_number" class="form-control" id="room_number" placeholder="房间号">
+                  <!-- <input type="text" name="room_number" class="form-control" id="room_number" placeholder="房间号"> -->
+                  <select class="form-control" name="room_number" id="room_number">
+			                    
+			      </select>
+                  
                 </div>
                 <div class="form-group">
-                  <label for="exampleInputPassword1">居室</label>
-                  <input type="text" name="bed_room" class="form-control" id="bed_room" placeholder="居室">
+                  <label for="exampleInputPassword1">房间面积</label>
+                  <input type="text" name="room_area" class="form-control" id="room_area " placeholder="房间面积">
                 </div>
                 <div class="form-group">
-                  <label for="exampleInputPassword1">朝向</label>
-                  <input type="text" name="orientation" class="form-control" id="orientation" placeholder="朝向">
+                  <label for="exampleInputPassword1">是否有空调</label>
+                  <!-- <input type="text" name="orientation" class="form-control" id="air_conditioner" placeholder=""> -->
+               	<select class="form-control" name="air_conditioner" id="air_conditioner">
+			      <option value ="0">无空调</option>
+			      <option value ="1">有空调</option>
+			    </select>	
                 </div>
-                <div class="form-group">
-                  <label for="exampleInputPassword1">房间价钱</label>
-                  <input type="text" name="room_money" class="form-control" id="room_money" placeholder="房间价钱">
+                   <div class="form-group">
+                  <label for="exampleInputPassword1">是否有电视机</label>
+                  <!-- <input type="text" name="orientation" class="form-control" id="air_conditioner" placeholder=""> -->
+               	<select class="form-control" name="television" id="television">
+			      <option value ="0">无电视机</option>
+			      <option value ="1">有电视机</option>
+			    </select>	
                 </div>
+                   <div class="form-group">
+                  <label for="exampleInputPassword1">是否有电话</label>
+                  <!-- <input type="text" name="orientation" class="form-control" id="air_conditioner" placeholder=""> -->
+               	<select class="form-control" name="telephone" id="telephone">
+			      <option value ="0">无电话</option>
+			      <option value ="1">有电话</option>
+			    </select>	
+                </div>
+                   <div class="form-group">
+                  <label for="exampleInputPassword1">是否有卫生间</label>
+                  <!-- <input type="text" name="orientation" class="form-control" id="air_conditioner" placeholder=""> -->
+               	<select class="form-control" name="toilet" id="toilet">
+			      <option value ="0">无卫生间</option>
+			      <option value ="1">有卫生间</option>
+			    </select>	
+                </div>
+                   
+               
               </div>
               <!-- /.box-body -->
 			<input type="hidden" name="establish_date" id="establish_date"/>
             </form>
               <div class="box-footer">
-                <button type="submit" class="btn btn-primary" id="saveRoomStandrd">保存信息</button>
+                <button type="submit" class="btn btn-primary" onclick="saveRoomStandrd();">保存信息</button>
               </div>
           </div>
           </div>
@@ -295,6 +325,45 @@
 <script src="../dist/js/pages/dashboard.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="../dist/js/demo.js"></script>
+
+<script type="text/javascript">
+	$(function(){
+		query();
+	});
+	function query(){
+		$.ajax({
+			url:"../findRoom_number",
+			type:"GET",
+			dataType:"json",
+			success:function(data){
+				var _html='';
+				$.each(data.list,function(e,info){
+					_html+='<option value=\''+info.room_number+'\'>'+info.room_number+'</option>';
+				});
+				$("#room_number").html(_html);
+		}
+		});
+	}
+	function saveRoomStandrd(){
+		$.ajax({
+			url:"../saveRoomInFormation",
+			data:$("#addRoomId").serialize(),
+			type:"POST",
+			dataType:"json",
+			 success:function(data){
+				 if(data.status="200"){
+						alert(data.message);
+						location.href="reservationInquiry.html";
+					}else{
+						alert(data.message);
+					}
+		}
+		});
+	}
+</script>
+	
+
+
 </body>
 </html>
 
