@@ -216,29 +216,47 @@
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
-		<div class="box box-primary">
+<div class="box box-primary">
             <div class="box-header with-border">
-              <h3 class="box-title">新增预定信息</h3>
+              <h3 class="box-title" id="room_standard"></h3>
             </div>
             <!-- /.box-header -->
             <!-- form start -->
-            <form role="form">
+            <form role="form" action="" id="reservationAddId">
               <div class="box-body">
                 <div class="form-group">
-                  <label for="exampleInputEmail1">Email address</label>
-                  <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+                  <label for="exampleInputPassword1">房间号</label>
+<!--                   <input type="text" name="room_number" class="form-control" id="room_number" placeholder="房间号"> -->
+							<select class="form-control" name="room_number" id="room_number">
+			                    
+			                  </select>
                 </div>
                 <div class="form-group">
-                  <label for="exampleInputPassword1">Password</label>
-                  <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                  <label for="exampleInputPassword1">订房人</label>
+                  <input type="text" name="name" class="form-control" id="name" placeholder="订房人">
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputPassword1">订房人身份证号</label>
+                  <input type="text" name="id_card" class="form-control" id="id_card" placeholder="订房人身份证号">
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputPassword1">订房人手机号</label>
+                  <input type="text" name="phone" class="form-control" id="phone" placeholder="订房人手机号">
+                </div>
+                 <div class="form-group">
+                  <label for="exampleInputPassword1">是否付款</label>
+                  <input type="text" name="money_status" class="form-control" id="money_status" placeholder="是否付款">
+                </div>
+                 <div class="form-group">
+                  <label for="exampleInputPassword1">入住时间</label>
+                  <input type="text" name="check_in_time" class="form-control" id="check_in_time" placeholder="入住时间">
                 </div>
               </div>
-              <!-- /.box-body -->
-
-              <div class="box-footer">
-                <button type="submit" class="btn btn-primary">Submit</button>
-              </div>
+              <input type="hidden" id="reservationId" name="id"/>
             </form>
+              <div class="box-footer">
+                <button type="submit" class="btn btn-primary" id="saveReservationAdd">保存信息</button>
+              </div>
           </div>
         
       </div>
@@ -281,6 +299,115 @@
 <script src="../dist/js/pages/dashboard.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="../dist/js/demo.js"></script>
+<script type="text/javascript">
+var url='';
+$(function(){
+	url=window.location .href;
+	  var standardId=url.indexOf('=');
+	if (standardId == -1){
+		$("#room_standard").text("新增入住信息");
+		queryRoomStatus();
+		$("#saveReservationAdd").click(function(){
+			addReservation();
+		});
+	}else{
+	  url=url.substring(standardId+1);
+	  $("#reservationId").val(url);
+	  $("#room_standard").text("修改入住信息");
+		queryReservationById();
+		$("#saveReservationAdd").click(function(){
+			updateReservation();
+		});
+	}
+});
+
+function addReservation(){
+	if($("#room_number").val()==''||$("#room_number").val()==null){
+		alert("请选择房间号");
+		return;
+	}
+	var phone = $("#phone").val()
+	if(parseInt(phone)!=phone){//通过parseInt转换变量a的值，然后与a本身进行比较，如果是整数，则两者一致，如果不是整数，则两者不一致。
+		   //是整数
+		   alert("请输入正确的手机号");
+			return;
+		}
+	
+	$.ajax({
+		url:"../reception",
+		data:$("#reservationAddId").serialize(),
+		type:"POST",
+		dataType:"json",
+		success:function(data){
+			if(data.status="200"){
+				alert(data.message);
+				location.href="queryOrder.html";
+			}else{
+				alert(data.message);
+			}
+		}
+});  
+}
+
+function updateReservation(){
+	
+	
+	var phone = $("#phone").val()
+	if(parseInt(phone)!=phone){//通过parseInt转换变量a的值，然后与a本身进行比较，如果是整数，则两者一致，如果不是整数，则两者不一致。
+		   //是整数
+		   alert("请输入正确的手机号");
+			return;
+		}
+	
+	$.ajax({
+		url:"../updateReception",
+		data:$("#reservationAddId").serialize(),
+		type:"POST",
+		dataType:"json",
+		success:function(data){
+			if(data.status="200"){
+				alert(data.message);
+				location.href="queryOrder.html";
+			}else{
+				alert(data.message);
+			}
+		}
+});  
+}
+
+function queryReservationById(){
+	$.ajax({
+		url:"../queryReceptionById",
+		data:{"id":$("#reservationId").val()},
+		type:"GET",
+		dataType:"json",
+		success:function(data){
+			$("#room_number").html('<option value=\''+data.predetermined.room_number+'\'>'+data.predetermined.room_number+'</option>');
+			$("#name").val(data.predetermined.name);
+			$("#id_card").val(data.predetermined.id_card);
+			$("#phone").val(data.predetermined.phone);
+			$("#money_status").val(data.predetermined.money_status);
+			$("#check_in_time").val(data.predetermined.check_in_time);
+		}
+});
+}
+
+function queryRoomStatus(){
+	$.ajax({
+		url:"../status",
+		data:{"room_status":'0'},
+		type:"GET",
+		dataType:"json",
+		success:function(data){
+			var _html='';
+			$.each(data.list,function(e,info){
+				_html+='<option value=\''+info.room_number+'\'>'+info.room_number+'</option>';
+			});
+			$("#room_number").html(_html);
+		}
+	});
+}
+</script>
 </body>
 </html>
 

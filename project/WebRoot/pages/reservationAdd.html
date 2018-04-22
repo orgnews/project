@@ -322,7 +322,10 @@ $(function(){
 });
 
 function addReservation(){
-	
+	if($("#room_number").val()==''||$("#room_number").val()==null){
+		alert("请选择房间号");
+		return;
+	}
 	var phone = $("#phone").val()
 	if(parseInt(phone)!=phone){//通过parseInt转换变量a的值，然后与a本身进行比较，如果是整数，则两者一致，如果不是整数，则两者不一致。
 		   //是整数
@@ -374,17 +377,17 @@ function updateReservation(){
 
 function queryReservationById(){
 	$.ajax({
-		url:"../predeterminedById",
+		url:"../queryReceptionById",
 		data:{"id":$("#reservationId").val()},
 		type:"GET",
 		dataType:"json",
 		success:function(data){
-			$("#room_number").html('<option value=\''+data.predetermined.room_number+'\'>'+data.predetermined.room_number+'</option>');
-			$("#name").val(data.predetermined.name);
-			$("#id_card").val(data.predetermined.id_card);
-			$("#phone").val(data.predetermined.phone);
-			$("#money_status").val(data.predetermined.money_status);
-			$("#check_in_time").val(data.predetermined.check_in_time);
+			$("#room_number").html('<option value=\''+data.reception.room_number+'\'>'+data.reception.room_number+'</option>');
+			$("#name").val(data.reception.name);
+			$("#id_card").val(data.reception.id_card);
+			$("#phone").val(data.reception.phone);
+			$("#money_status").val(data.reception.money_status);
+			$("#check_in_time").val(data.reception.check_in_time);
 		}
 });
 }

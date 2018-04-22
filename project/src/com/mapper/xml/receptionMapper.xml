@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.ReceptionMapper">
+	<insert id="addReception" parameterType="com.pojo.Reception">
+		insert into reception (id,room_number,name,id_card,phone,money_status,check_in_time) values 
+		(#{id},#{room_number},#{name},#{id_card},#{phone},#{money_status},#{check_in_time})
+	</insert>
+	<delete id="deleteReception">
+		delete from reception where id=#{id}
+	</delete>
+	<select id="queryReception" resultType="java.util.Map">
+		select * from reception limit #{startPage},#{number}
+	</select>
+	<select id="queryReceptionCount" resultType="int">
+		select count(1) from reception
+	</select>
+	<select id="queryReceptionById" resultType="com.pojo.Reception">
+		select * from reception where id=#{id}
+	</select>
+	<update id="updateReception" parameterType="com.pojo.Reception">
+		update reception set room_number=#{room_number},name=#{name},id_card=#{id_card},
+		phone=#{phone},money_status=#{money_status},check_in_time=#{check_in_time}
+		where id=#{id}
+	</update>
+</mapper>
