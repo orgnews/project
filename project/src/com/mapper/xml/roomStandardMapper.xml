@@ -38,4 +38,7 @@
 		delete from room_standard where id=#{delId}
 	</delete>
 	
+	<select id="queryRoomNumber" resultType="com.pojo.RoomStandard">
+		select * from room_standard where room_number=#{room_number}
+	</select>
 </mapper>

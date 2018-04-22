@@ -8,10 +8,14 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import com.mapper.DoBusinessMapper;
 import com.mapper.PredeterminedMapper;
 import com.mapper.RoomInformationMapper;
+import com.mapper.RoomStandardMapper;
+import com.pojo.DoBusiness;
 import com.pojo.Paging;
 import com.pojo.Predetermined;
+import com.pojo.RoomStandard;
 import com.service.PredeterminedService;
 import com.util.Util;
 
@@ -23,13 +27,31 @@ public class PredeterminedServiceImpl implements PredeterminedService {
 	private PredeterminedMapper predeterminedMapper;
 	@Resource
 	private RoomInformationMapper roomInformationMapper;
-
+	@Resource
+	private DoBusinessMapper doBusinessMapper;
+	@Resource
+	private RoomStandardMapper roomStandardMapper;
 	@Override
 	public Map<String, Object> addPredetermined(Predetermined predetermined) {
 		map.clear();
 		try {
+			predetermined.setId(Util.uuid());
+			predetermined.setCheck_in_time(Util.date());
 			predeterminedMapper.addPredetermined(predetermined);
 			roomInformationMapper.updateRoomInformationStatus("1", predetermined.getRoom_number());
+			if(predetermined.getMoney_status().equals("1")){
+				RoomStandard  roomStandard  = roomStandardMapper.queryRoomNumber(predetermined.getRoom_number());
+				DoBusiness doBusiness = new DoBusiness();
+				doBusiness.setId(Util.uuid());
+				doBusiness.setMoney(roomStandard.getRoom_money());
+				doBusiness.setRoom_number(predetermined.getRoom_number());
+				doBusiness.setAdd_time(Util.date());
+				doBusiness.setName(predetermined.getName());
+				doBusiness.setId_card(predetermined.getId_card());
+				doBusiness.setPhone(predetermined.getPhone());
+				doBusinessMapper.addDoBusiness(doBusiness);
+			}
+			
 			map.put("status", "200");
 			map.put("message", "预订客房成功");
 		} catch (Exception e) {

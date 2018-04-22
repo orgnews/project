@@ -216,30 +216,47 @@
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
-		<div class="box box-primary">
-            <div class="box-header with-border">
-              <h3 class="box-title">新增预定信息</h3>
-            </div>
+		<div class="box">
             <!-- /.box-header -->
-            <!-- form start -->
-            <form role="form">
-              <div class="box-body">
-                <div class="form-group">
-                  <label for="exampleInputEmail1">Email address</label>
-                  <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
-                </div>
-                <div class="form-group">
-                  <label for="exampleInputPassword1">Password</label>
-                  <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                </div>
+            <div class="box-body">
+              <div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+              <div class="row">
+              <div class="col-sm-6"></div>
+              <div class="col-sm-6">
+              <div id="example1_filter" class="dataTables_filter">
+              <table>
+              <tbody>
+              <!-- <tr>
+                  <td><input type="text" class="form-control" placeholder="房间号" id="roomNumber"></td>
+                <td><button type="button" class="btn btn-block btn-primary btn-flat" onclick="queryRoomStandard(1,10);">查询</button></td>
+                </tr> -->
+                </tbody>
+              </table>
               </div>
-              <!-- /.box-body -->
-
-              <div class="box-footer">
-                <button type="submit" class="btn btn-primary">Submit</button>
               </div>
-            </form>
+              </div>
+              <div class="row"><div class="col-sm-12">
+              <table id="example1" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+                <thead>
+                <tr>
+               	  <td class="sorting_1">房间号</td>
+                  <td>客房名称</td>
+                  <td>房间面积</td>
+                  <td>客房状态</td>
+                  </tr>
+                </thead>
+                <tbody id="roomStandard_id">
+               </tbody>
+              </table></div></div><div class="row">
+              <div class="col-sm-5" id="htmlCount_id">
+              
+              
+              
+              </div></div>
+            </div>
+            <!-- /.box-body -->
           </div>
+        </div>
         
       </div>
 <!-- ./wrapper -->
@@ -281,6 +298,92 @@
 <script src="../dist/js/pages/dashboard.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="../dist/js/demo.js"></script>
+<script type="text/javascript">
+var pageCount=10;
+var countNum;
+var pageNum=1;
+	$(function(){
+		queryRoomStandard(1,pageCount);
+	});
+	function queryRoomStandard(pageNum,pageCount){
+		$.ajax({
+			url:"../inStatus",
+			data:{"pageNum":pageNum,"pageCount":pageCount},
+			type:"GET",
+			dataType:"json",
+			success:function(data){
+				countNum = data.page.count;
+				pageNum = data.page.page;
+				var _html='';
+				$.each(data.list,function(e,info){
+					var room_status='';
+					if(info.room_status==1){
+						room_status='已订单';
+					}else if(info.room_status==2){
+						room_status='已居住';
+					}
+					_html+='<tr role="row" class="even">'+
+		                  '<td class="sorting_1">'+info.room_number+'</td>'+
+		                  '<td>'+info.room_name+'</td>'+
+		                  '<td>'+info.room_area+'</td>'+
+		                  '<td>'+room_status+'</td>'+
+		                '</tr>';
+				});
+				var html_count='<div class="dataTables_info" id="example1_info" role="status" aria-live="polite">'+
+		              '共显示'+data.page.count+'条数据,共'+data.page.countPage+'页,当前为第'+data.page.page+'页</div>'+
+	              '</div>'+
+	              '<div class="col-sm-7">'+
+	              '<div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">'+
+	              '<ul class="pagination">'+
+	              '<li class="paginate_button next" id="example1_next">'+
+	              '<a href="#" aria-controls="example1" data-dt-idx="7" tabindex="0" onclick="firstPage();">首页</a>'+
+	              '</li>'+
+	              '<li class="paginate_button next" id="example1_next">'+
+	              '<a href="#" aria-controls="example1" data-dt-idx="7" tabindex="0" onclick="upPage();">上一页</a>'+
+	              '</li>'+
+	              '<li class="paginate_button next" id="example1_next">'+
+	              '<a href="#" aria-controls="example1" data-dt-idx="7" tabindex="0" onclick="nextPage();">下一页</a>'+
+	              '</li>'+
+	              '<li class="paginate_button next" id="example1_next">'+
+	              '<a href="#" aria-controls="example1" data-dt-idx="7" tabindex="0" onclick="lastPage();">末页</a>'+
+	              '</li>'+
+	              '</ul></div></div>';
+	              $("#htmlCount_id").html(html_count);
+				$("#roomStandard_id").html(_html);
+			}			
+		});
+	}
+	function firstPage(){
+		pageNum=1;
+		queryRoomStandard(pageNum,pageCount);
+	}
+	function upPage(){
+		if(pageNum>1){
+			pageNum--;
+		}else{
+			alert("当前为第一页");
+			return;
+		}
+		queryRoomStandard(pageNum,pageCount);
+	}
+
+
+	function nextPage(){
+		var lastPage = countNum%pageCount==0?parseInt(countNum/pageCount):parseInt(countNum/pageCount+1);
+		if(pageNum<lastPage){
+			pageNum++;
+		}else{
+			alert("当前为最后一页");
+			return;
+		}
+		queryRoomStandard(pageNum,pageCount);
+	}
+
+	function lastPage(){
+		pageNum= countNum%pageCount==0?parseInt(countNum/pageCount):parseInt(countNum/pageCount+1);
+		queryRoomStandard(pageNum,pageCount);
+	}
+</script>
 </body>
 </html>
 

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.DoBusinessMapper">
+	<insert id="addDoBusiness" parameterType="com.pojo.DoBusiness">
+		insert into do_business (id,room_number,money,add_time,name,id_card,phone) values 
+		(#{id},#{room_number},#{money},#{add_time},#{name},#{id_card},#{phone})
+	</insert>
+	<select id="queryDoBusiness" resultType="java.util.Map">
+		select * from do_business limit #{startPage},#{number}
+	</select>
+	<select id="queryDoBusinessCount" resultType="int">
+		select count(1) from do_business
+	</select>
+</mapper>

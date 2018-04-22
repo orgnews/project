@@ -26,4 +26,12 @@ public class RoomInformationController {
 		map = roomInformationService.queryRoomInformationStatus(room_status);
 		return map;
 	}
+	
+	@RequestMapping(value="/inStatus",method=RequestMethod.GET)
+	@ResponseBody
+	public Map<String,Object> queryRoomInformationInStatus(int pageNum, int pageCount){
+		map.clear();
+		map = roomInformationService.queryRoomInformationInStatus(pageNum,pageCount);
+		return map;
+	}
 }

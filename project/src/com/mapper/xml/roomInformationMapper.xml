@@ -15,4 +15,11 @@
 	<sql id="roomStatus">
 		room_status=#{room_status}
 	</sql>
+	<select id="queryRoomInformationIn" resultType="java.util.Map">
+		select * from room_information where room_status!=0 limit #{startPage},#{number}
+	</select>
+	
+	<select id="queryRoomInformationInCount" resultType="java.util.Map">
+		select count(1) from room_information where room_status!=0
+	</select>
 </mapper>

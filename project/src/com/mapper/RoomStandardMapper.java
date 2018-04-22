@@ -17,4 +17,6 @@ public interface RoomStandardMapper {
 	public void updateRoomStandard(RoomStandard roomStandard);
 
 	public void delRoomStandard(String delId);
+	
+	public RoomStandard queryRoomNumber(String room_number);
 }
