@@ -220,6 +220,7 @@
             <div class="box-header with-border">
               <h3 class="box-title" id="room_standard"></h3>
             </div>
+            
             <!-- /.box-header -->
             <!-- form start -->
             <form role="form" action="" id="addRoomId">
@@ -239,7 +240,7 @@
                 </div>
                 <div class="form-group">
                   <label for="exampleInputPassword1">房间面积</label>
-                  <input type="text" name="room_area" class="form-control" id="room_area " placeholder="房间面积">
+                  <input type="text" name="room_area" class="form-control" id="room_area" placeholder="房间面积">
                 </div>
                 <div class="form-group">
                   <label for="exampleInputPassword1">是否有空调</label>
@@ -280,7 +281,7 @@
 			<input type="hidden" name="establish_date" id="establish_date"/>
             </form>
               <div class="box-footer">
-                <button type="submit" class="btn btn-primary" onclick="saveRoomStandrd();">保存信息</button>
+                <button type="submit" class="btn btn-primary" id="saveRoomStandrd">保存信息</button>
               </div>
           </div>
           </div>
@@ -330,6 +331,34 @@
 	$(function(){
 		query();
 	});
+	
+	var url='';
+	$(function(){
+		url=window.location .href;
+		  var standardId=url.indexOf('=');
+		if (standardId == -1){
+			$("#room_standard").text("新建客房信息");
+			$("#saveRoomStandrd").click(function(){
+				saveRoomStandrd();
+				
+			});
+		}else{
+		
+		  url=url.substring(standardId+1);
+		  $("#room_standard_id").val(url);
+		  $("#room_standard").text("修改客房信息");
+			queryRoomStandardById();
+			console.log("id="+url);
+			$("#saveRoomStandrd").click(function(){
+			
+				updateRoomStandard();
+			});
+		}
+	});
+	
+	
+	
+	
 	function query(){
 		$.ajax({
 			url:"../findRoom_number",
@@ -353,12 +382,63 @@
 			 success:function(data){
 				 if(data.status="200"){
 						alert(data.message);
-						location.href="reservationInquiry.html";
+						location.href="inquireAboutRoom.html";
 					}else{
 						alert(data.message);
 					}
 		}
 		});
+	}
+	
+	
+	function updateRoomStandard(){
+				/* 	var floor = $("#floor").val()
+					if(parseInt(floor)!=floor){//通过parseInt转换变量a的值，然后与a本身进行比较，如果是整数，则两者一致，如果不是整数，则两者不一致。
+						   //是整数
+						   alert("楼层输入有误 ， 请输入数字");
+							return;
+						}
+					
+					var room_number = $("#room_number").val()
+					if(parseInt(room_number)!=room_number){//通过parseInt转换变量a的值，然后与a本身进行比较，如果是整数，则两者一致，如果不是整数，则两者不一致。
+						   //是整数
+						   alert("房间号输入有误 ， 请输入数字");
+							return;
+						} */
+					
+				 	$.ajax({
+						url:"../updateRoomInFormation",
+						data:$("#addRoomId").serialize(),
+						type:"POST",
+						dataType:"json",
+						success:function(data){
+							if(data.status==200){
+								alert(data.message);
+							}else{
+								alert(data.message);
+							}
+						}
+			});   
+			}
+	function queryRoomStandardById(){
+		$.ajax({
+			url:"../roomInFormationById",
+			data:{"id":url},
+			type:"GET",
+			dataType:"json",
+			success:function(data){
+				console.log(data);
+				$("#room_name").val(data.roomInFormation.room_name);
+				var room_number = '<option value=\''+data.roomInFormation.room_number+'\'>'+data.roomInFormation.room_number+'</option>';
+				$("#room_number").html(room_number);
+				$("#room_area").val(data.roomInFormation.room_area);
+				$("#air_conditioner").val(data.roomInFormation.air_conditioner);
+				$("#television").val(data.roomInFormation.television);
+				$("#telephone").val(data.roomInFormation.telephone);
+				$("#toilet").val(data.roomInFormation.toilet);
+				$("#establish_date").val(data.roomInFormation.establish_date);
+			}
+	});
 	}
 </script>
 	

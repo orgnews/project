@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.mapper.RoomInformationMapper;
 import com.pojo.Paging;
 import com.pojo.RoomInFormation;
+import com.pojo.RoomStandard;
 import com.service.RoomInformationService;
 import com.util.Util;
 
@@ -35,6 +36,28 @@ public class RoomInformationServiceImpl implements RoomInformationService {
 		}
 		return map;
 	}
+	//lxm剩余客房
+	@Override
+	public Map<String, Object> residueRoomInformationStatus(int pageNum,int pageCount, String findCondition) {
+		map.clear();
+		
+		try {
+			int count = roomInformationMapper.residueRoomStandardCount(findCondition);
+			Paging page = Util.paging(count, pageNum, pageCount);
+			List<Object> objList=roomInformationMapper.residueRoomInformationStatus(page.getStartCount(), pageCount,findCondition);
+			map.put("page",page);
+			map.put("list", objList);
+			map.put("status", "200");
+			map.put("message", "查询成功！");
+		}catch(Exception e) {
+			map.put("status", "500");
+			map.put("message", "查询失败！");
+			e.printStackTrace();
+		}
+		
+		return map;
+	}
+	
 	
 	//查询所有房间号
 	@Override
@@ -60,6 +83,73 @@ public class RoomInformationServiceImpl implements RoomInformationService {
 		}catch(Exception e){
 			map.put("status", 200);
 			map.put("message", "新建客房信息失败");
+			e.printStackTrace();
+		}
+		return map;
+	}
+    //查询客房信息
+	@Override
+	public Map<String,Object>queryRoomInFormation(int pageNum,int pageCount,String findCondition){
+		Map<String,Object>map=new HashMap<String, Object>();
+		try {
+			int count = roomInformationMapper.queryRoomStandardCount(findCondition);
+			Paging page = Util.paging(count, pageNum, pageCount);
+			List<Object> objList=roomInformationMapper.roomInformationMapper(page.getStartCount(), pageCount,findCondition);
+			map.put("page",page);
+			map.put("list", objList);
+			map.put("status", "200");
+			map.put("message", "查询成功！");
+		}catch(Exception e) {
+			map.put("status", "500");
+			map.put("message", "查询失败！");
+			e.printStackTrace();
+		}
+		return map;
+	
+	}
+	//删除客房信息
+	public Map<String,Object>delRoomInFormation(String delId){
+		Map<String,Object>map=new HashMap<String, Object>();
+		try {
+			roomInformationMapper.delRoomInFormation(delId);
+			map.put("status", "200");
+			map.put("message", "删除客房信息成功");
+		} catch (Exception e) {
+			map.put("status", "500");
+			map.put("message", "删除客房信息失败");
+			e.printStackTrace();
+		}
+		
+		return map;
+		
+	}
+	//根据id查询
+	@Override
+	public Map<String, Object> queryInFormationById(String id) {
+		Map<String,Object> map = new HashMap<String,Object>();
+		try {
+			RoomInFormation roomInFormation = roomInformationMapper.queryInFormationById(id);
+			map.put("roomInFormation", roomInFormation);
+			map.put("status", "200");
+			map.put("message", "查询客房信息成功");
+		}catch(Exception e) {
+			map.put("status", "500");
+			map.put("message", "查询客房信息失败");
+			e.printStackTrace();
+		}
+		return map;
+	}
+	//修改
+	@Override
+	public Map<String, Object> updateRoomInFormation(RoomInFormation roomInFormation) {
+		Map<String,Object> map = new HashMap<String,Object>();
+		try {
+			roomInformationMapper.updateRoomInFormation(roomInFormation);
+			map.put("status", "200");
+			map.put("message", "修改客房信息成功");
+		}catch(Exception e) {
+			map.put("status", "500");
+			map.put("message", "修改客房信息失败");
 			e.printStackTrace();
 		}
 		return map;

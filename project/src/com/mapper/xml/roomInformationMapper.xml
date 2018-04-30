@@ -6,6 +6,16 @@
 		<include refid="roomStatus"/>
 	</select>
 	
+	<select id="residueRoomInformationStatus" resultType="java.util.Map">
+	select * from room_information  where  1=1 and room_status=0
+	<if test="findCondition !=null and findCondition!='' and findCondition!='null'">
+   		<![CDATA[
+			 and room_number like CONCAT('%',#{findCondition},'%' )
+		]]>
+		</if>
+		limit #{startPage},#{number}
+	</select>
+	
 	<update id="updateRoomInformationStatus">
 		update room_information  set
 		<include refid="roomStatus"/>
@@ -31,5 +41,42 @@
 		 values (#{id},#{room_number},#{room_name},#{room_area},#{air_conditioner},#{television},#{telephone},#{toilet},#{room_status},#{establish_date})
 	</insert>
 	
+	<select id="roomInformationMapper" resultType="java.util.Map">
+	select * from room_information  where 1=1
+	<if test="findCondition !=null and findCondition!='' and findCondition!='null'">
+   		<![CDATA[
+			 and room_number like CONCAT('%',#{findCondition},'%' )
+		]]>
+		</if>
+		limit #{startPage},#{number}
+	</select>
+	
+		<select id="queryRoomStandardCount" resultType="int">
+		select count(1) from room_information  where 1=1
+		<if test="findCondition !=null and findCondition!='' and findCondition!='null'">
+   		<![CDATA[
+			 and room_number like CONCAT('%',#{findCondition},'%' )
+		]]>
+		</if>
+	</select>
+	<select id="residueRoomStandardCount" resultType="int">
+		select count(1) from room_information  where 1=1 and room_status=0
+		<if test="findCondition !=null and findCondition!='' and findCondition!='null'">
+   		<![CDATA[
+			 and room_number like CONCAT('%',#{findCondition},'%' )
+		]]>
+		</if>
+	</select>
+	
+		<delete id="delRoomInFormation" parameterType="String" >
+		delete from room_information where id=#{delId}
+	</delete>
+	<select id="queryInFormationById" parameterType="String" resultType="com.pojo.RoomInFormation">
+		select * from room_information where id=#{id}
+	</select>
+	<update id="updateRoomInFormation" parameterType="com.pojo.RoomInFormation">
+		update room_information set room_number=#{room_number},room_name=#{room_name},room_area=#{room_area},air_conditioner=#{air_conditioner}
+   		,television=#{television},telephone=#{telephone},toilet=#{toilet},establish_date=#{establish_date} where id=#{id}
+	</update>
 	
 </mapper>
