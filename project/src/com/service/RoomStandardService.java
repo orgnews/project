@@ -15,4 +15,6 @@ public interface RoomStandardService {
 	public Map<String,Object> updateRoomStandard(RoomStandard roomStandard);
 
 	public Map<String, Object> delRoomStandard(String delId);
+
+	public Map<String, Object> queryEarlyWarningRoomStandardById(String id);
 }

@@ -98,5 +98,27 @@ public class RoomStandardServiceImpl implements RoomStandardService{
 		
 		return map;
 	}
+	//查询预警客房信息
+	@Override
+	public Map<String, Object> queryEarlyWarningRoomStandardById(String id) {
+		Map<String,Object> map = new HashMap<String,Object>();
+		try {
+			RoomStandard roomStandard = roomStandardMapper.queryRoomStandardById(id);
+			String time = roomStandard.getRoom_money();
+			String[] times = time.split("-");
+			for (int i = 0; i < times.length; i++) {
+				System.out.println(times[i]);
+			}
+			map.put("roomStandard", roomStandard);
+			map.put("status", "200");
+			map.put("message", "查询预警客房信息");
+		}catch(Exception e) {
+			map.put("status", "500");
+			map.put("message", "查询预警客房信息");
+			e.printStackTrace();
+		}
+		return map;
+		
+	}
 
 }

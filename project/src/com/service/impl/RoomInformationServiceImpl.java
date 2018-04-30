@@ -49,7 +49,7 @@ public class RoomInformationServiceImpl implements RoomInformationService {
 	public Map<String, Object> saveRoomInFormation(RoomInFormation roomInFormation) {
 		Map<String,Object> map = new HashMap<String,Object>();
 		try {
-			System.err.println(Util.date());
+			
 		roomInFormation.setId(Util.uuid());
 		roomInFormation.setEstablish_date(Util.date());
 		roomInFormation.setRoom_status("0");

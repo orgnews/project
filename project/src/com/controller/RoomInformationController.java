@@ -52,7 +52,9 @@ public class RoomInformationController {
 	@ResponseBody
 	public Map<String,Object> saveRoomInFormation(RoomInFormation roomInFormation){
 		map.clear();
+		
 		map = roomInformationService.saveRoomInFormation(roomInFormation);
+		
         return map;
 	}
 }

@@ -65,6 +65,13 @@ public class RoomStandardController {
 		map = roomStandardService.delRoomStandard(delId);
 		return map;
 	}
-	
+	//查询预警客房信息
+	@RequestMapping(value="/queryEarlyWarningRoomStandardById",method=RequestMethod.GET)
+	@ResponseBody
+	public Map<String,Object> queryEarlyWarningRoomStandardById(String id){
+		Map<String,Object> map = new HashMap<String,Object>();
+		map = roomStandardService.queryEarlyWarningRoomStandardById(id);
+		return map;
+	}
 	
 }
