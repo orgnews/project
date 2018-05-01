@@ -26,4 +26,38 @@ public class LoginController {
 		map = loginService.queryLogin(username, password);
 		return map;
 	}
+	
+	@RequestMapping(value="/queryLogin" ,method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String,Object> addLogin(String username,String password){
+		map.clear();
+		map = loginService.addLogin(username, password);
+		return map;
+	}
+	
+	@RequestMapping(value="/queryLoginAll",method=RequestMethod.GET)
+	@ResponseBody
+	public Map<String,Object> queryLoginAll(int pageNum,int pageCount){
+		map.clear();
+		map = loginService.queryLoginAll(pageNum, pageCount);
+		return map;
+	}
+	
+	@RequestMapping(value="/saveUserPaw",method=RequestMethod.GET)
+	@ResponseBody
+	public Map<String,Object> saveUserPaw(String username,String old_password,String new_password){
+		map.clear();
+		map = loginService.saveUserPaw(username,old_password,new_password);
+		return map;
+	}
+	
+	@RequestMapping(value="/saveBlackStatus",method=RequestMethod.GET)
+	@ResponseBody
+	public Map<String,Object> saveBlackStatus(String username,String status){
+		map.clear();
+		map = loginService.saveBlackStatus(username,status);
+		return map;
+	}
+	
+	
 }
