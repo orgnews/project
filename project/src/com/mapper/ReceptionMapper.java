@@ -12,9 +12,9 @@ public interface ReceptionMapper {
 	
 	public void deleteReception(@Param("id")String id);
 	
-	public List<Object> queryReception(@Param("startPage")int startPage,@Param("number")int number);
+	public List<Object> queryReception(@Param("startPage")int startPage,@Param("number")int number,@Param("findCondition")String findCondition);
 	
-	public int queryReceptionCount();
+	public int queryReceptionCount(@Param("findCondition")String findCondition);
 	
 	public Reception queryReceptionById(@Param("id")String id);
 	

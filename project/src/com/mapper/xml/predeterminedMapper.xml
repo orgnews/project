@@ -14,11 +14,21 @@
 		where id=#{id}
 	</update>
 	<select id="queryPredetermined" resultType="java.util.Map">
-		select * from predetermined
+		select * from predetermined where 1=1
+		<if test="findCondition !=null and findCondition!='' and findCondition!='null'">
+   		<![CDATA[
+			 and room_number like CONCAT('%',#{findCondition},'%' )
+		]]>
+		</if>
 		limit #{startPage},#{number}
 	</select>
 	<select id="queryPredeterminedCount" resultType="int">
-		select count(1) from predetermined
+		select count(1) from predetermined where 1=1
+		<if test="findCondition !=null and findCondition!='' and findCondition!='null'">
+   		<![CDATA[
+			 and room_number like CONCAT('%',#{findCondition},'%' )
+		]]>
+		</if>
 	</select>
 	<select id="queryPredeterminedById" parameterType="String" resultType="com.pojo.Predetermined">
 		select * from predetermined where id=#{id}

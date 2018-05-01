@@ -224,14 +224,14 @@
               <div class="col-sm-6"></div>
               <div class="col-sm-6">
               <div id="example1_filter" class="dataTables_filter">
-              <!-- <table>
+               <table>
               <tbody>
-              <tr>
+              <tr align="left">
                   <td><input type="text" class="form-control" placeholder="房间号" id="roomNumber"></td>
                 <td><button type="button" class="btn btn-block btn-primary btn-flat" onclick="queryRoomStandard(1,10);">查询</button></td>
                 </tr>
                 </tbody>
-              </table> -->
+              </table>
               </div>
               </div>
               </div>
@@ -310,7 +310,7 @@ var pageNum=1;
 	function queryRoomStandard(pageNum,pageCount){
 		$.ajax({
 			url:"../predetermined",
-			data:{"pageNum":pageNum,"pageCount":pageCount},
+			data:{"pageNum":pageNum,"pageCount":pageCount,"findCondition":$("#roomNumber").val()},
 			type:"GET",
 			dataType:"json",
 			success:function(data){

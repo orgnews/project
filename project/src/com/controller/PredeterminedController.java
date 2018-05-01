@@ -30,9 +30,9 @@ public class PredeterminedController {
 	
 	@RequestMapping(value="/predetermined",method=RequestMethod.GET)
 	@ResponseBody
-	public Map<String,Object> queryPredetermined(int pageNum,int pageCount){
+	public Map<String,Object> queryPredetermined(int pageNum,int pageCount,String findCondition){
 		map.clear();
-		map = predeterminedService.queryPredetermined(pageNum, pageCount);
+		map = predeterminedService.queryPredetermined(pageNum, pageCount,findCondition);
 		return map;
 	}
 	

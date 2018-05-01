@@ -94,12 +94,12 @@ public class PredeterminedServiceImpl implements PredeterminedService {
 	}
 
 	@Override
-	public Map<String, Object> queryPredetermined(int pageNum, int pageCount) {
+	public Map<String, Object> queryPredetermined(int pageNum, int pageCount,String findCondition) {
 		map.clear();
 		try {
-			int count = predeterminedMapper.queryPredeterminedCount();
+			int count = predeterminedMapper.queryPredeterminedCount(findCondition);
 			Paging page = Util.paging(count, pageNum, pageCount);
-			List<Object> objList = predeterminedMapper.queryPredetermined(page.getStartCount(), pageCount);
+			List<Object> objList = predeterminedMapper.queryPredetermined(page.getStartCount(), pageCount,findCondition);
 			map.put("page", page);
 			map.put("list", objList);
 			map.put("status", "200");

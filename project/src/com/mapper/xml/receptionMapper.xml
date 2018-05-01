@@ -9,10 +9,22 @@
 		delete from reception where id=#{id}
 	</delete>
 	<select id="queryReception" resultType="java.util.Map">
-		select * from reception limit #{startPage},#{number}
+		select * from reception where 1=1
+	<if test="findCondition !=null and findCondition!='' and findCondition!='null'">
+   		<![CDATA[
+			 and room_number like CONCAT('%',#{findCondition},'%' )
+		]]>
+		</if>
+		limit #{startPage},#{number}
+	
 	</select>
 	<select id="queryReceptionCount" resultType="int">
-		select count(1) from reception
+		select count(1) from reception where 1=1
+		<if test="findCondition !=null and findCondition!='' and findCondition!='null'">
+   		<![CDATA[
+			 and room_number like CONCAT('%',#{findCondition},'%' )
+		]]>
+		</if>
 	</select>
 	<select id="queryReceptionById" resultType="com.pojo.Reception">
 		select * from reception where id=#{id}

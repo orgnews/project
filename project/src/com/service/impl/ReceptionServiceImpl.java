@@ -91,12 +91,12 @@ public class ReceptionServiceImpl implements ReceptionService {
 	}
 
 	@Override
-	public Map<String, Object> queryReception(int pageNum, int pageCount) {
+	public Map<String, Object> queryReception(int pageNum, int pageCount,String findCondition) {
 		map.clear();
 		try {
-			int count = receptionMapper.queryReceptionCount();
+			int count = receptionMapper.queryReceptionCount(findCondition);
 			Paging page = Util.paging(count, pageNum, pageCount);
-			List<Object> objList = receptionMapper.queryReception(page.getStartCount(), pageCount);
+			List<Object> objList = receptionMapper.queryReception(page.getStartCount(), pageCount,findCondition);
 			map.put("page", page);
 			map.put("list", objList);
 			map.put("status", "200");

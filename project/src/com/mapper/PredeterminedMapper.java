@@ -8,8 +8,8 @@ import com.pojo.Predetermined;
 
 public interface PredeterminedMapper {
 	public void addPredetermined(Predetermined predetermined);
-	public List<Object> queryPredetermined(@Param("startPage")int startPage,@Param("number")int number);
-	public int queryPredeterminedCount();
+	public List<Object> queryPredetermined(@Param("startPage")int startPage,@Param("number")int number,@Param("findCondition")String findCondition);
+	public int queryPredeterminedCount(@Param("findCondition")String findCondition);
 	public Predetermined queryPredeterminedById(String id);
 	public void updatePredetermined(Predetermined predetermined);
 	public void deletePredetermined(String id);

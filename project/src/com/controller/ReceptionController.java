@@ -38,8 +38,8 @@ public class ReceptionController {
 	}
 	@RequestMapping(value="/queryReception",method=RequestMethod.GET)
 	@ResponseBody
-	public Map<String,Object> queryReception(int pageNum, int pageCount){
-		return receptionService.queryReception(pageNum, pageCount);
+	public Map<String,Object> queryReception(int pageNum, int pageCount,String findCondition){
+		return receptionService.queryReception(pageNum, pageCount,findCondition);
 	}
 	
 	@RequestMapping(value="/queryReceptionById",method=RequestMethod.GET)

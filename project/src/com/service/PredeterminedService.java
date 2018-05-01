@@ -9,6 +9,6 @@ public interface PredeterminedService {
 	public Map<String,Object> addPredetermined(Predetermined predetermined);
 	public Map<String,Object> deletePredetermined(String id);
 	public Map<String,Object> updatePredetermined(Predetermined predetermined);
-	public Map<String,Object> queryPredetermined(int pageNum,int pageCount);
+	public Map<String,Object> queryPredetermined(int pageNum,int pageCount,String findCondition);
 	public Map<String,Object> queryPredeterminedById(String id);
 }
