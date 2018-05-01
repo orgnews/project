@@ -26,13 +26,20 @@
 
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+	<style type="text/css">
+	body{
+	background-image:url{pages/bj.jpg;}
+	
+	}
+	</style>
 </head>
-<body class="hold-transition login-page">
+<body  class="hold-transition login-page" >
+<img src="pages/bj.jpg" > 
 <div class="login-box">
   
   <!-- /.login-logo -->
   <div class="login-box-body">
-    <p class="login-box-msg">Sign in to start your session</p>
+    <p class="login-box-msg">酒店管理系统</p>
 
       <div class="form-group has-feedback">
         <input type="email" class="form-control" placeholder="Email" name="username" id="username">
@@ -42,14 +49,20 @@
         <input type="password" class="form-control" placeholder="Password" name="password" id="password">
         <span class="glyphicon form-control-feedback"></span>
       </div>
-      <div class="row">
-        <!-- /.col -->
+      <table >
+      <tr >
+      <td><button type="submit" class="btn btn-primary btn-block btn-flat" onclick="sign();">登录</button></td>
+      <td><button type="submit" class="btn btn-primary btn-block btn-flat" onclick="register();">注册</button></td>
+      </tr>
+      </table>
+     <!--  <div class="row">
+        /.col
         <div class="col-xs-4">
           <button type="submit" class="btn btn-primary btn-block btn-flat" onclick="sign();">登录</button>
           <button type="submit" class="btn btn-primary btn-block btn-flat" onclick="register();">注册</button>
         </div>
-        <!-- /.col -->
-      </div>
+        /.col
+      </div> -->
   </div>
   <!-- /.login-box-body -->
 </div>
