@@ -106,9 +106,7 @@ public class RoomStandardServiceImpl implements RoomStandardService{
 			RoomStandard roomStandard = roomStandardMapper.queryRoomStandardById(id);
 			String time = roomStandard.getRoom_money();
 			String[] times = time.split("-");
-			for (int i = 0; i < times.length; i++) {
-				System.out.println(times[i]);
-			}
+			
 			map.put("roomStandard", roomStandard);
 			map.put("status", "200");
 			map.put("message", "查询预警客房信息");
