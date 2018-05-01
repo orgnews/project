@@ -100,7 +100,7 @@ public class RoomStandardServiceImpl implements RoomStandardService{
 	}
 	//查询预警客房信息
 	@Override
-	public Map<String, Object> queryEarlyWarningRoomStandardById(String id) {
+	public Map<String, Object> queryEarlyWarningRoomStandard(String id) {
 		Map<String,Object> map = new HashMap<String,Object>();
 		try {
 			RoomStandard roomStandard = roomStandardMapper.queryRoomStandardById(id);

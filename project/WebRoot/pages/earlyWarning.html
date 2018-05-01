@@ -229,7 +229,7 @@
               <tbody>
               <tr>
                   <td><input type="text" class="form-control" placeholder="房间号" id="roomNumber"></td>
-                <td><button type="button" class="btn btn-block btn-primary btn-flat" onclick="queryRoomStandard(1,10);">查询</button></td>
+                <td><button type="button" class="btn btn-block btn-primary btn-flat" onclick="queryEarlyWarningRoomStandard(1,10);">查询</button></td>
                 </tr>
                 </tbody>
               </table> -->
@@ -306,9 +306,9 @@ var pageCount=10;
 var countNum;
 var pageNum=1;
 	$(function(){
-		queryRoomStandard(1,pageCount);
+		queryEarlyWarningRoomStandard(1,pageCount);
 	});
-	function queryRoomStandard(pageNum,pageCount){
+	function queryEarlyWarningRoomStandard(pageNum,pageCount){
 		$.ajax({
 			url:"../predetermined",
 			data:{"pageNum":pageNum,"pageCount":pageCount},
@@ -334,7 +334,7 @@ var pageNum=1;
 		                  '<td>'+info.check_in_time+'</td>'+
 		                  '<td><div class="btn-group">'+
 		                  '<button type="button" class="btn btn-default btn-sm" onclick="delRoomStandardById(\''+info.id+'\');"><i class="fa fa-trash-o"></i></button>'+
-		                 ' <button type="button" class="btn btn-default btn-sm" onclick="queryEarlyWarningRoomStandardById(\''+info.id+'\');"><i class="fa fa-edit"></i></button>'+
+		                 ' <button type="button" class="btn btn-default btn-sm" onclick="queryRoomStandardById(\''+info.id+'\');"><i class="fa fa-edit"></i></button>'+
 		                '</div></td>'+
 		                '</tr>';
 				});
@@ -364,7 +364,7 @@ var pageNum=1;
 	}
 	function firstPage(){
 		pageNum=1;
-		queryRoomStandard(pageNum,pageCount);
+		queryEarlyWarningRoomStandard(pageNum,pageCount);
 	}
 	function upPage(){
 		if(pageNum>1){
@@ -373,7 +373,7 @@ var pageNum=1;
 			alert("当前为第一页");
 			return;
 		}
-		queryRoomStandard(pageNum,pageCount);
+		queryEarlyWarningRoomStandard(pageNum,pageCount);
 	}
 
 
@@ -385,14 +385,14 @@ var pageNum=1;
 			alert("当前为最后一页");
 			return;
 		}
-		queryRoomStandard(pageNum,pageCount);
+		queryEarlyWarningRoomStandard(pageNum,pageCount);
 	}
 
 	function lastPage(){
 		pageNum= countNum%pageCount==0?parseInt(countNum/pageCount):parseInt(countNum/pageCount+1);
-		queryRoomStandard(pageNum,pageCount);
+		queryEarlyWarningRoomStandard(pageNum,pageCount);
 	}
-	function queryEarlyWarningRoomStandardById(roomStandardId){
+	function queryRoomStandardById(roomStandardId){
 		location.href="reservationAdd.html?id="+roomStandardId;
 	}
 	
