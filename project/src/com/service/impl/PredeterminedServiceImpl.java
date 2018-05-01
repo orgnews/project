@@ -55,7 +55,7 @@ public class PredeterminedServiceImpl implements PredeterminedService {
 			map.put("status", "200");
 			map.put("message", "预订客房成功");
 		} catch (Exception e) {
-			map.put("status", "200");
+			map.put("status", "500");
 			map.put("message", "预订客房失败");
 			e.printStackTrace();
 		}
@@ -71,7 +71,7 @@ public class PredeterminedServiceImpl implements PredeterminedService {
 			map.put("status", "200");
 			map.put("message", "删除客房成功");
 		} catch (Exception e) {
-			map.put("status", "200");
+			map.put("status", "500");
 			map.put("message", "删除客房成功");
 			e.printStackTrace();
 		}
@@ -105,7 +105,7 @@ public class PredeterminedServiceImpl implements PredeterminedService {
 			map.put("status", "200");
 			map.put("message", "查询成功！");
 		}catch(Exception e) {
-			map.put("status", "200");
+			map.put("status", "500");
 			map.put("message", "查询失败！");
 			e.printStackTrace();
 		}
@@ -121,7 +121,7 @@ public class PredeterminedServiceImpl implements PredeterminedService {
 			map.put("status", "200");
 			map.put("message", "查询预定信息成功");
 		} catch (Exception e) {
-			map.put("status", "200");
+			map.put("status", "500");
 			map.put("message", "查询预定信息失败");
 			e.printStackTrace();
 		}

@@ -45,7 +45,8 @@
       <div class="row">
         <!-- /.col -->
         <div class="col-xs-4">
-          <button type="submit" class="btn btn-primary btn-block btn-flat" onclick="sign();">Sign In</button>
+          <button type="submit" class="btn btn-primary btn-block btn-flat" onclick="sign();">登录</button>
+          <button type="submit" class="btn btn-primary btn-block btn-flat" onclick="register();">注册</button>
         </div>
         <!-- /.col -->
       </div>
@@ -89,9 +90,36 @@
   				alert(data.message);
   			}else if(data.status==500){
   				alert(data.message);
+  			}else if(data.status==404){
+  				alert(data.message);
   			}else if(data.status==200){
   				alert(data.message);
   				location.href="index.html";
+  			}
+  		}
+  	}); 
+  }
+  function register(){
+  	if($("#username").val()==null || $("#username").val().length==0){
+  		alert("用户名不能为空");
+  		return;
+  	}else if($("#password").val() == null||$("#password").val().length==0){
+  		alert("密码不能为空");
+  		return;
+  	}
+  	$.ajax({
+  		url:"queryLogin",
+  		data:{"username":$("#username").val(),"password":$("#password").val()},
+  		type:"POST",
+  		dataType:"json",
+  		success:function(data){
+  			if(data.status==403){
+  				alert(data.message);
+  			}else if(data.status==500){
+  				alert(data.message);
+  			}else if(data.status==200){
+  				alert(data.message);
+  				location.href="login.html";
   			}
   		}
   	}); 
