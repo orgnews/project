@@ -37,7 +37,6 @@ public class LoginServiceImpl implements LoginService{
 				}
 			}else if(objList.size()<1){
 				map.put("status", 404);
-				map.put("message", "用户名或密码不正确");
 			}else{
 				map.put("status", 403);
 				map.put("message", "登陆失败,多个用户名重复");
